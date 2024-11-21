@@ -18,6 +18,7 @@
         public string Address { get; set; }
 
 
+        public string Gender { get; set; }
         public int CourseId { get; set; }
     }
 }

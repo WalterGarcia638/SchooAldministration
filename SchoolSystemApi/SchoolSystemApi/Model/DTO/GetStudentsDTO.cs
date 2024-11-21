@@ -10,5 +10,6 @@
         public string Address { get; set; }
         public int CourseId { get; set; }
         public string CourseName { get; set; }
+        public string Gender { get; set; }
     }
 }

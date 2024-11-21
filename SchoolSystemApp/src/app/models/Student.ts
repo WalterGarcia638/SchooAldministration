@@ -10,4 +10,5 @@ export interface Student {
     courseId: number;
     courseName?: string;
     course?: Course;
+    gender: string;
   }

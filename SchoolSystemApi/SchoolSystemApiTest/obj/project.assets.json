@@ -5418,11 +5418,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\PruebaTecnica\\BHD\\SchoolSystem\\SchoolSystemApi\\SchoolSystemApiTest\\SchoolSystemApiTest.csproj",
+      "projectUniqueName": "D:\\repo\\SchooAldministration\\SchoolSystemApi\\SchoolSystemApiTest\\SchoolSystemApiTest.csproj",
       "projectName": "SchoolSystemApiTest",
-      "projectPath": "D:\\PruebaTecnica\\BHD\\SchoolSystem\\SchoolSystemApi\\SchoolSystemApiTest\\SchoolSystemApiTest.csproj",
+      "projectPath": "D:\\repo\\SchooAldministration\\SchoolSystemApi\\SchoolSystemApiTest\\SchoolSystemApiTest.csproj",
       "packagesPath": "C:\\Users\\Walter Garcia\\.nuget\\packages\\",
-      "outputPath": "D:\\PruebaTecnica\\BHD\\SchoolSystem\\SchoolSystemApi\\SchoolSystemApiTest\\obj\\",
+      "outputPath": "D:\\repo\\SchooAldministration\\SchoolSystemApi\\SchoolSystemApiTest\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -5444,8 +5444,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "D:\\PruebaTecnica\\BHD\\SchoolSystem\\SchoolSystemApi\\SchoolSystemApi\\SchoolSystemApi.csproj": {
-              "projectPath": "D:\\PruebaTecnica\\BHD\\SchoolSystem\\SchoolSystemApi\\SchoolSystemApi\\SchoolSystemApi.csproj"
+            "D:\\repo\\SchooAldministration\\SchoolSystemApi\\SchoolSystemApi\\SchoolSystemApi.csproj": {
+              "projectPath": "D:\\repo\\SchooAldministration\\SchoolSystemApi\\SchoolSystemApi\\SchoolSystemApi.csproj"
             }
           }
         }

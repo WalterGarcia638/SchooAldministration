@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "713YEeNpjfkTPTXXmbESreb7wkM6Yshjk5dRxvqcXpa134ZNjhq//YAjWn3WAfU3X5feIZTUkSP1toswcTCnCA==",
+  "dgSpecHash": "4BL3EcIirf9tCAFxwcu4+FXE6x242H/Mp4zWqnIRqvlLD1jNXdYEKUF5HdXTcCCEGs3Xl1GjrPElZyvxY6vB8w==",
   "success": true,
-  "projectFilePath": "D:\\PruebaTecnica\\BHD\\SchoolSystem\\SchoolSystemApi\\SchoolSystemApiTest\\SchoolSystemApiTest.csproj",
+  "projectFilePath": "D:\\repo\\SchooAldministration\\SchoolSystemApi\\SchoolSystemApiTest\\SchoolSystemApiTest.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Walter Garcia\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\Walter Garcia\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",

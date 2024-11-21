@@ -64,7 +64,7 @@
   },
   {
     "ContainingType": "SchoolSystemApi.Controllers.CourseController",
-    "Method": "DeleteBrand",
+    "Method": "DeleteCourse",
     "RelativePath": "api/Course/{CourseId}",
     "HttpMethod": "DELETE",
     "IsController": true,
@@ -98,6 +98,101 @@
     "ContainingType": "SchoolSystemApi.Controllers.CourseController",
     "Method": "GeCoursetById",
     "RelativePath": "api/Course/GetById",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SchoolSystemApi.Controllers.GradeController",
+    "Method": "GetGrade",
+    "RelativePath": "api/Grade",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SchoolSystemApi.Controllers.GradeController",
+    "Method": "CreateGrade",
+    "RelativePath": "api/Grade",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "GradeDto",
+        "Type": "SchoolSystemApi.Model.DTO.GradeDTO.GradeDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SchoolSystemApi.Controllers.GradeController",
+    "Method": "UpdateGrade",
+    "RelativePath": "api/Grade/{GradeId}",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "GradeId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "updateGradeDTO",
+        "Type": "SchoolSystemApi.Model.DTO.GradeDTO.UpdateGradeDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SchoolSystemApi.Controllers.GradeController",
+    "Method": "DeleteGrade",
+    "RelativePath": "api/Grade/{GradeId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "GradeId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SchoolSystemApi.Controllers.GradeController",
+    "Method": "GetGradeByName",
+    "RelativePath": "api/Grade/{name}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "name",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SchoolSystemApi.Controllers.GradeController",
+    "Method": "GeGradetById",
+    "RelativePath": "api/Grade/GetById",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -175,7 +270,7 @@
   },
   {
     "ContainingType": "SchoolSystemApi.Controllers.StudentController",
-    "Method": "DeleteBrand",
+    "Method": "DeleteStudent",
     "RelativePath": "api/Student/{StudentId}",
     "HttpMethod": "DELETE",
     "IsController": true,
@@ -193,6 +288,180 @@
     "ContainingType": "SchoolSystemApi.Controllers.StudentController",
     "Method": "GeStudenttById",
     "RelativePath": "api/Student/GetById",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SchoolSystemApi.Controllers.StudentGradeDetailController",
+    "Method": "GetStudentGradeDetail",
+    "RelativePath": "api/StudentGradeDetail",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SchoolSystemApi.Controllers.StudentGradeDetailController",
+    "Method": "CreateStudentGradeDetail",
+    "RelativePath": "api/StudentGradeDetail",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "StudentGradeDetailDto",
+        "Type": "SchoolSystemApi.Model.DTO.StudentGradeDetailDTO.StudentGradeDetailDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SchoolSystemApi.Controllers.StudentGradeDetailController",
+    "Method": "UpdateStudentGradeDetail",
+    "RelativePath": "api/StudentGradeDetail/{StudentGradeDetailId}",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "StudentGradeDetailId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "StudentGradeDetailDTO",
+        "Type": "SchoolSystemApi.Model.DTO.StudentGradeDetailDTO.UpdateStudentGradeDetailDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SchoolSystemApi.Controllers.StudentGradeDetailController",
+    "Method": "DeleteStudentGradeDetail",
+    "RelativePath": "api/StudentGradeDetail/{StudentGradeDetailId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "StudentGradeDetailId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SchoolSystemApi.Controllers.StudentGradeDetailController",
+    "Method": "GeStudentGradeDetailtById",
+    "RelativePath": "api/StudentGradeDetail/GetById",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SchoolSystemApi.Controllers.TeacherController",
+    "Method": "GetTeacher",
+    "RelativePath": "api/Teacher",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SchoolSystemApi.Controllers.TeacherController",
+    "Method": "CreateTeacher",
+    "RelativePath": "api/Teacher",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Teacher",
+        "Type": "SchoolSystemApi.Model.Teacher",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SchoolSystemApi.Controllers.TeacherController",
+    "Method": "GetTeacherByName",
+    "RelativePath": "api/Teacher/{name}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "name",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SchoolSystemApi.Controllers.TeacherController",
+    "Method": "UpdateTeacher",
+    "RelativePath": "api/Teacher/{TeacherId}",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "TeacherId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "Teacher",
+        "Type": "SchoolSystemApi.Model.Teacher",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SchoolSystemApi.Controllers.TeacherController",
+    "Method": "DeleteTeacher",
+    "RelativePath": "api/Teacher/{TeacherId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "TeacherId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SchoolSystemApi.Controllers.TeacherController",
+    "Method": "GeTeachertById",
+    "RelativePath": "api/Teacher/GetById",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

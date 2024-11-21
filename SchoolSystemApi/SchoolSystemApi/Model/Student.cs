@@ -31,6 +31,10 @@ namespace SchoolSystemApi.Model
         [ForeignKey("Course")]
         public int CourseId { get; set; }
 
+        [Required]
+        [StringLength(60)]
+        public string Gender { get; set; }
+
         public Course Course { get; set; }
     }
 }

@@ -2,19 +2,23 @@
     <h1>Sistema de registro de estudiantes</h1>
 </div>
 
-
 <div class="container mt-5">
     <div class="row mb-4 text-center">
         <div class="col-md-6 mx-auto">
-            <input type="text" [(ngModel)]="searchTerm" name="searchTerm" class="form-control" placeholder="Search by name" />
+            <input type="text" [(ngModel)]="searchTerm" name="searchTerm" class="form-control" placeholder="Buscar por nombre o apellido" />
         </div>
     </div>
 
+    <!-- Botones para abrir los modales de cada entidad -->
     <div class="d-flex justify-content-end mb-4">
-        <button class="btn btn-sm btn-primary me-2" data-bs-toggle="modal" data-bs-target="#studentModal">Crear Estudiante</button>
-        <button class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#courseModal">Crear Curso</button>
+        <button class="btn btn-sm btn-primary me-2" data-bs-toggle="modal" data-bs-target="#studentModal" (click)="resetForm()">Crear Estudiante</button>
+        <button class="btn btn-sm btn-secondary me-2" data-bs-toggle="modal" data-bs-target="#courseModal">Crear Curso</button>
+        <button class="btn btn-sm btn-warning me-2" data-bs-toggle="modal" data-bs-target="#teacherModal">Gestionar Profesores</button>
+        <button class="btn btn-sm btn-info me-2" data-bs-toggle="modal" data-bs-target="#gradeModal">Gestionar Grados</button>
+        <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#studentGradeDetailModal">Gestionar Detalles de Estudiantes en Grados</button>
     </div>
 
+    <!-- Tabla de estudiantes -->
     <table class="table table-hover table-bordered mt-4">
         <thead class="table-dark">
             <tr>
@@ -22,8 +26,9 @@
                 <th>Apellido</th>
                 <th>Edad</th>
                 <th>Fecha de nacimiento</th>
+                <th>Género</th>
                 <th>Curso</th>
-                <th>Direccion</th>
+                <th>Dirección</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -33,7 +38,8 @@
                 <td>{{ student.lastName }}</td>
                 <td>{{ student.age }}</td>
                 <td>{{ student.dateOfBirth | date }}</td>
-                <td>{{ student.courseName }}</td>
+                <td>{{ student.gender }}</td>
+                <td>{{ getCourseName(student.courseId) }}</td>
                 <td>{{ student.address }}</td>
                 <td>
                     <button class="btn btn-info btn-sm me-2" (click)="editStudent(student)" data-bs-toggle="modal" data-bs-target="#studentModal">Editar</button>
@@ -43,28 +49,32 @@
         </tbody>
     </table>
 
+    <!-- Modal para Estudiante -->
     <div class="modal fade" id="studentModal" tabindex="-1" aria-labelledby="studentModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Aumentamos el tamaño del modal -->
             <div class="modal-content">
+                <!-- Encabezado del modal -->
                 <div class="modal-header">
                     <h5 class="modal-title" id="studentModalLabel">{{ editing ? 'Editar estudiante' : 'Crear estudiante' }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                <!-- Cuerpo del modal -->
                 <div class="modal-body">
                     <form #studentForm="ngForm">
                         <div class="row">
                             <div class="col-md-6">
                                 <label for="firstName" class="form-label">Nombre</label>
-                                <input [(ngModel)]="firstName" name="firstName" class="form-control" id="firstName" placeholder="Enter first name" required #firstNameModel="ngModel">
+                                <input [(ngModel)]="firstName" name="firstName" class="form-control" id="firstName" placeholder="Ingresa el nombre" required #firstNameModel="ngModel">
                                 <div *ngIf="firstNameModel.invalid && firstNameModel.touched" class="text-danger">
-                                    First Name is required
+                                    El nombre es requerido
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <label for="lastName" class="form-label">Apellido</label>
-                                <input [(ngModel)]="lastName" name="lastName" class="form-control" id="lastName" placeholder="Enter last name" required #lastNameModel="ngModel">
+                                <input [(ngModel)]="lastName" name="lastName" class="form-control" id="lastName" placeholder="Ingresa el apellido" required #lastNameModel="ngModel">
                                 <div *ngIf="lastNameModel.invalid && lastNameModel.touched" class="text-danger">
-                                    Last Name is required
+                                    El apellido es requerido
                                 </div>
                             </div>
                         </div>
@@ -72,79 +82,98 @@
                         <div class="row mt-3">
                             <div class="col-md-4">
                                 <label for="age" class="form-label">Edad</label>
-                                <input [(ngModel)]="age" name="age" type="number" class="form-control" id="age" placeholder="Enter age" required min="1" #ageModel="ngModel">
+                                <input [(ngModel)]="age" name="age" type="number" class="form-control" id="age" placeholder="Ingresa la edad" required min="1" #ageModel="ngModel">
                                 <div *ngIf="ageModel.invalid && ageModel.touched" class="text-danger">
-                                    Age is required and must be a positive number
+                                    La edad es requerida y debe ser un número positivo
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <label for="dateOfBirth" class="form-label">Fecha de nacimiento</label>
                                 <input [(ngModel)]="dateOfBirth" name="dateOfBirth" type="date" class="form-control" id="dateOfBirth" required #dateOfBirthModel="ngModel">
                                 <div *ngIf="dateOfBirthModel.invalid && dateOfBirthModel.touched" class="text-danger">
-                                    Date of Birth is required
+                                    La fecha de nacimiento es requerida
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <label for="courseId" class="form-label">Curso</label>
-                                <select [(ngModel)]="courseId" name="courseId" class="form-select" id="courseId" required #courseIdModel="ngModel">
-                                <option *ngFor="let course of courses" [value]="course.id">{{ course.name }}</option>
+                                <label for="gender" class="form-label">Género</label>
+                                <select [(ngModel)]="gender" name="gender" class="form-select" id="gender" required #genderModel="ngModel">
+                                <option value="" disabled selected>Seleccione el género</option>
+                                <option value="Male">Masculino</option>
+                                <option value="Female">Femenino</option>
+                                <option value="Other">Otro</option>
                             </select>
-                                <div *ngIf="courseIdModel.invalid && courseIdModel.touched" class="text-danger">
-                                    Course is required
+                                <div *ngIf="genderModel.invalid && genderModel.touched" class="text-danger">
+                                    El género es requerido
                                 </div>
                             </div>
                         </div>
 
-                        <div class="mt-3">
-                            <label for="address" class="form-label">Direccion</label>
-                            <textarea [(ngModel)]="address" name="address" class="form-control" id="address" placeholder="Enter address" required #addressModel="ngModel"></textarea>
-                            <div *ngIf="addressModel.invalid && addressModel.touched" class="text-danger">
-                                Address is required
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <label for="courseId" class="form-label">Curso</label>
+                                <select [(ngModel)]="courseId" name="courseId" class="form-select" id="courseId" required #courseIdModel="ngModel">
+                                <option value="" disabled selected>Seleccione un curso</option>
+                                <option *ngFor="let course of courses" [value]="course.id">{{ course.name }}</option>
+                            </select>
+                                <div *ngIf="courseIdModel.invalid && courseIdModel.touched" class="text-danger">
+                                    El curso es requerido
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="address" class="form-label">Dirección</label>
+                                <textarea [(ngModel)]="address" name="address" class="form-control" id="address" placeholder="Ingresa la dirección" required #addressModel="ngModel" rows="3"></textarea>
+                                <div *ngIf="addressModel.invalid && addressModel.touched" class="text-danger">
+                                    La dirección es requerida
+                                </div>
                             </div>
                         </div>
                     </form>
                 </div>
+                <!-- Pie del modal -->
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" [disabled]="studentForm.invalid" (click)="submitForm()" data-bs-dismiss="modal">Guardar</button>
+                    <button type="button" class="btn btn-primary" [disabled]="studentForm.invalid" (click)="submitForm()" data-bs-dismiss="modal">{{ editing ? 'Actualizar' : 'Guardar' }}</button>
                 </div>
             </div>
         </div>
     </div>
 
-
+    <!-- Modal para Curso -->
     <div class="modal fade" id="courseModal" tabindex="-1" aria-labelledby="courseModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
+                <!-- Encabezado del modal -->
                 <div class="modal-header">
                     <h5 class="modal-title" id="courseModalLabel">{{ editingCourse ? 'Editar curso' : 'Crear curso' }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                <!-- Cuerpo del modal -->
                 <div class="modal-body">
                     <form #courseForm="ngForm">
                         <div class="mb-3">
                             <label for="courseName" class="form-label">Nombre del curso</label>
-                            <input [(ngModel)]="courseName" name="courseName" class="form-control" id="courseName" placeholder="Enter course name" required #courseNameModel="ngModel">
+                            <input [(ngModel)]="courseName" name="courseName" class="form-control" id="courseName" placeholder="Ingresa el nombre del curso" required #courseNameModel="ngModel">
                             <div *ngIf="courseNameModel.invalid && courseNameModel.touched" class="text-danger">
-                                Course Name is required
+                                El nombre del curso es requerido
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="courseDescription" class="form-label">Descripcion del curso</label>
-                            <input [(ngModel)]="courseDescription" name="courseDescription" class="form-control" id="courseDescription" placeholder="Enter course description" required #courseDescriptionModel="ngModel">
+                            <label for="courseDescription" class="form-label">Descripción del curso</label>
+                            <input [(ngModel)]="courseDescription" name="courseDescription" class="form-control" id="courseDescription" placeholder="Ingresa la descripción del curso" required #courseDescriptionModel="ngModel">
                             <div *ngIf="courseDescriptionModel.invalid && courseDescriptionModel.touched" class="text-danger">
-                                Course Description is required
+                                La descripción del curso es requerida
                             </div>
                         </div>
                     </form>
 
+                    <!-- Tabla de cursos -->
                     <h5 class="mt-4">Cursos Creados</h5>
                     <table class="table table-hover table-bordered mt-2">
                         <thead class="table-dark">
                             <tr>
-                                <th>Name</th>
-                                <th>Description</th>
-                                <th>Actions</th>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -159,9 +188,218 @@
                         </tbody>
                     </table>
                 </div>
+                <!-- Pie del modal -->
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                     <button type="button" class="btn btn-primary" [disabled]="courseForm.invalid" (click)="submitCourse()" data-bs-dismiss="modal">{{ editingCourse ? 'Editar curso' : 'Guardar curso' }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Profesor -->
+    <div class="modal fade" id="teacherModal" tabindex="-1" aria-labelledby="teacherModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Encabezado del modal -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="teacherModalLabel">{{ editingTeacher ? 'Editar profesor' : 'Crear profesor' }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <!-- Cuerpo del modal -->
+                <div class="modal-body">
+                    <form #teacherForm="ngForm">
+                        <div class="mb-3">
+                            <label for="teacherFirstName" class="form-label">Nombre</label>
+                            <input [(ngModel)]="teacherFirstName" name="teacherFirstName" class="form-control" id="teacherFirstName" required #teacherFirstNameModel="ngModel">
+                            <div *ngIf="teacherFirstNameModel.invalid && teacherFirstNameModel.touched" class="text-danger">
+                                El nombre es requerido
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="teacherLastName" class="form-label">Apellido</label>
+                            <input [(ngModel)]="teacherLastName" name="teacherLastName" class="form-control" id="teacherLastName" required #teacherLastNameModel="ngModel">
+                            <div *ngIf="teacherLastNameModel.invalid && teacherLastNameModel.touched" class="text-danger">
+                                El apellido es requerido
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="teacherGender" class="form-label">Género</label>
+                            <select [(ngModel)]="teacherGender" name="teacherGender" class="form-select" id="teacherGender" required #teacherGenderModel="ngModel">
+                                <option value="" disabled selected>Seleccione el género</option>
+                                <option value="Male">Masculino</option>
+                                <option value="Female">Femenino</option>
+                            </select>
+                            <div *ngIf="teacherGenderModel.invalid && teacherGenderModel.touched" class="text-danger">
+                                El género es requerido
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- Tabla de profesores -->
+                    <h5 class="mt-4">Profesores</h5>
+                    <table class="table table-hover table-bordered mt-2">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Género</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let teacher of teachers">
+                                <td>{{ teacher.firstName }}</td>
+                                <td>{{ teacher.lastName }}</td>
+                                <td>{{ teacher.gender }}</td>
+                                <td>
+                                    <button class="btn btn-info btn-sm me-2" (click)="editTeacher(teacher)">Editar</button>
+                                    <button class="btn btn-danger btn-sm" (click)="deleteTeacher(teacher.id)">Eliminar</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Pie del modal -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" [disabled]="teacherForm.invalid" (click)="submitTeacher()" data-bs-dismiss="modal">{{ editingTeacher ? 'Actualizar profesor' : 'Guardar profesor' }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Grado -->
+    <div class="modal fade" id="gradeModal" tabindex="-1" aria-labelledby="gradeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Encabezado del modal -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="gradeModalLabel">{{ editingGrade ? 'Editar grado' : 'Crear grado' }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <!-- Cuerpo del modal -->
+                <div class="modal-body">
+                    <form #gradeForm="ngForm">
+                        <div class="mb-3">
+                            <label for="gradeName" class="form-label">Nombre del grado</label>
+                            <input [(ngModel)]="gradeName" name="gradeName" class="form-control" id="gradeName" required #gradeNameModel="ngModel">
+                            <div *ngIf="gradeNameModel.invalid && gradeNameModel.touched" class="text-danger">
+                                El nombre del grado es requerido
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="gradeTeacherId" class="form-label">Profesor</label>
+                            <select [(ngModel)]="gradeTeacherId" name="gradeTeacherId" class="form-select" id="gradeTeacherId" required #gradeTeacherIdModel="ngModel">
+                                <option value="" disabled selected>Seleccione un profesor</option>
+                                <option *ngFor="let teacher of teachers" [value]="teacher.id">{{ teacher.firstName }} {{ teacher.lastName }}</option>
+                            </select>
+                            <div *ngIf="gradeTeacherIdModel.invalid && gradeTeacherIdModel.touched" class="text-danger">
+                                El profesor es requerido
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- Tabla de grados -->
+                    <h5 class="mt-4">Grados</h5>
+                    <table class="table table-hover table-bordered mt-2">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Profesor</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let grade of grades">
+                                <td>{{ grade.name }}</td>
+                                <td>{{ getTeacherName(grade.teacherId) }}</td>
+                                <td>
+                                    <button class="btn btn-info btn-sm me-2" (click)="editGrade(grade)">Editar</button>
+                                    <button class="btn btn-danger btn-sm" (click)="deleteGrade(grade.id)">Eliminar</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Pie del modal -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" [disabled]="gradeForm.invalid" (click)="submitGrade()" data-bs-dismiss="modal">{{ editingGrade ? 'Actualizar grado' : 'Guardar grado' }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Detalle de Estudiante en Grado -->
+    <div class="modal fade" id="studentGradeDetailModal" tabindex="-1" aria-labelledby="studentGradeDetailModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Encabezado del modal -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="studentGradeDetailModalLabel">{{ editingStudentGradeDetail ? 'Editar detalle de estudiante en grado' : 'Crear detalle de estudiante en grado' }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <!-- Cuerpo del modal -->
+                <div class="modal-body">
+                    <form #studentGradeDetailForm="ngForm">
+                        <div class="mb-3">
+                            <label for="studentGradeDetailStudentId" class="form-label">Estudiante</label>
+                            <select [(ngModel)]="studentGradeDetailStudentId" name="studentGradeDetailStudentId" class="form-select" id="studentGradeDetailStudentId" required #studentGradeDetailStudentIdModel="ngModel">
+                                <option value="" disabled selected>Seleccione un estudiante</option>
+                                <option *ngFor="let student of students" [value]="student.id">{{ student.firstName }} {{ student.lastName }}</option>
+                            </select>
+                            <div *ngIf="studentGradeDetailStudentIdModel.invalid && studentGradeDetailStudentIdModel.touched" class="text-danger">
+                                El estudiante es requerido
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="studentGradeDetailGradeId" class="form-label">Grado</label>
+                            <select [(ngModel)]="studentGradeDetailGradeId" name="studentGradeDetailGradeId" class="form-select" id="studentGradeDetailGradeId" required #studentGradeDetailGradeIdModel="ngModel">
+                                <option value="" disabled selected>Seleccione un grado</option>
+                                <option *ngFor="let grade of grades" [value]="grade.id">{{ grade.name }}</option>
+                            </select>
+                            <div *ngIf="studentGradeDetailGradeIdModel.invalid && studentGradeDetailGradeIdModel.touched" class="text-danger">
+                                El grado es requerido
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="studentGradeDetailSection" class="form-label">Sección</label>
+                            <input [(ngModel)]="studentGradeDetailSection" name="studentGradeDetailSection" class="form-control" id="studentGradeDetailSection" required #studentGradeDetailSectionModel="ngModel">
+                            <div *ngIf="studentGradeDetailSectionModel.invalid && studentGradeDetailSectionModel.touched" class="text-danger">
+                                La sección es requerida
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- Tabla de detalles de estudiantes en grados -->
+                    <h5 class="mt-4">Detalles de Estudiantes en Grados</h5>
+                    <table class="table table-hover table-bordered mt-2">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Estudiante</th>
+                                <th>Grado</th>
+                                <th>Sección</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let detail of studentGradeDetails">
+                                <td>{{ getStudentName(detail.studentId) }}</td>
+                                <td>{{ getGradeName(detail.gradeId) }}</td>
+                                <td>{{ detail.section }}</td>
+                                <td>
+                                    <button class="btn btn-info btn-sm me-2" (click)="editStudentGradeDetail(detail)">Editar</button>
+                                    <button class="btn btn-danger btn-sm" (click)="deleteStudentGradeDetail(detail.id)">Eliminar</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Pie del modal -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" [disabled]="studentGradeDetailForm.invalid" (click)="submitStudentGradeDetail()" data-bs-dismiss="modal">{{ editingStudentGradeDetail ? 'Actualizar detalle' : 'Guardar detalle' }}</button>
                 </div>
             </div>
         </div>

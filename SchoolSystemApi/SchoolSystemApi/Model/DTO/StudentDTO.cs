@@ -21,5 +21,6 @@ namespace SchoolSystemApi.Model.DTO
 
 
         public int CourseId { get; set; }
+        public string Gender { get; set; }
     }
 }

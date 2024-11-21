@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using SchoolSystemApi.Model;
 
 namespace SchoolSystemApi.Data
@@ -10,6 +11,9 @@ namespace SchoolSystemApi.Data
 
         public DbSet<Course> Course { get; set; }
         public DbSet<Student> Student { get; set;}
+        public DbSet<Teacher> Teacher { get; set; }
+        public DbSet<Grade> Grade { get; set; } 
+        public DbSet<StudentGradeDetail> StudentGradeDetail { get; set; }
      
 
     }

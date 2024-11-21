@@ -44,6 +44,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(Options => Options.UseSqlSer
 //Services
 builder.Services.AddScoped<ICourseRepository, CourseRepository>();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+builder.Services.AddScoped<ITeacherRepository, TeacherRepository>();
+builder.Services.AddScoped<IGradeRepository, GradeRepository>();
+builder.Services.AddScoped<IStudentGradeDetailRepository, StudentGradeDetailRepository>();
+
 
 builder.Services.AddAutoMapper(typeof(SchoolSystemMapper));
 

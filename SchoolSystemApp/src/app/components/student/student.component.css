@@ -1,0 +1,12 @@
+.form-label {
+    display: flex;
+    align-items: center;
+}
+
+
+/* Asegurar que los selects y textareas tengan la misma altura que los inputs */
+
+.form-select,
+textarea.form-control {
+    height: calc(2.5rem + 2px);
+}
